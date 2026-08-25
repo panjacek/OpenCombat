@@ -11,7 +11,7 @@ use strum::IntoEnumIterator;
 
 pub const DEFAULT_SERVER_REP_ADDRESS: &str = "tcp://0.0.0.0:4255";
 pub const DEFAULT_SERVER_PUB_ADDRESS: &str = "tcp://0.0.0.0:4256";
-///
+
 pub const TARGET_CYCLE_DURATION_US: u64 = 16666;
 pub const TARGET_FPS: u64 = 60;
 pub const SOLDIER_UPDATE_FREQ: u64 = 1;
@@ -26,7 +26,7 @@ pub const FEELING_DECREASING_FREQ: u64 = 60;
 pub const PHYSICS_UPDATE_FREQ: u64 = 1;
 //
 pub const END_MORALE: f32 = 0.2;
-///
+
 pub const VISIBILITY_IDLE_STANDUP_MODIFIER: f32 = 0.5;
 pub const VISIBILITY_IDLE_CROUCH_MODIFIER: f32 = 0.5;
 pub const VISIBILITY_IDLE_LYING_MODIFIER: f32 = -0.9;
@@ -40,7 +40,7 @@ pub const VISIBILITY_SUPPRESS_FIRE_MODIFIER: f32 = 0.5;
 pub const VISIBILITY_ENGAGE_MODIFIER: f32 = 0.5;
 pub const VISIBILITY_DEAD_MODIFIER: f32 = 0.0;
 pub const VISIBILITY_UNCONSCIOUS_MODIFIER: f32 = 0.0;
-///
+
 pub const TILE_TYPE_OPACITY_SHORT_GRASS: f32 = 0.0;
 pub const TILE_TYPE_OPACITY_MIDDLE_GRASS: f32 = 0.002;
 pub const TILE_TYPE_OPACITY_HIGH_GRASS: f32 = 0.1;
@@ -178,31 +178,31 @@ impl Default for ServerConfig {
         Self {
             send_debug_points: false,
             target_cycle_duration_us: TARGET_CYCLE_DURATION_US,
-            /// Frequency of flags update
+            // Frequency of flags update
             flags_update_freq: FLAGS_UPDATE_FREQ,
-            /// Frequency of soldier update :
-            ///  - World pixel point according to movement
-            ///  - ...
+            // Frequency of soldier update :
+            //  - World pixel point according to movement
+            //  - ...
             soldier_update_freq: SOLDIER_UPDATE_FREQ,
-            /// Frequency of soldier animation :
-            ///  - Compute visibility with other soldiers
-            ///  - Compute behavior against physics (explosions, gunfires, ...)
+            // Frequency of soldier animation :
+            //  - Compute visibility with other soldiers
+            //  - Compute behavior against physics (explosions, gunfires, ...)
             soldier_animate_freq: SOLDIER_ANIMATE_FREQ,
-            ///
+            //
             squad_leaders_update_freq: SQUAD_LEADERS_UPDATE_FREQ,
-            /// Frequency of update buildings interiors visibility
+            // Frequency of update buildings interiors visibility
             interiors_update_freq: INTERIORS_UPDATE_FREQ,
-            /// Frequency of update visibility between soldiers
+            // Frequency of update visibility between soldiers
             visibility_update_freq: VISIBILITY_UPDATE_FREQ,
-            ///
+            //
             morale_update_freq: MORALE_UPDATE_FREQ,
-            ///
+            //
             victory_update_freq: VICTORY_UPDATE_FREQ,
-            ///
+            //
             physics_update_freq: PHYSICS_UPDATE_FREQ,
-            /// Frequency of decreasing feelings
+            // Frequency of decreasing feelings
             feeling_decreasing_freq: FEELING_DECREASING_FREQ,
-            ///
+            //
             visibility_firsts: VISIBILITY_FIRSTS,
             visible_starts_at: VISIBLE_STARTS_AT,
             target_alteration_by_opacity_factor: TARGET_ALTERATION_BY_OPACITY_FACTOR,

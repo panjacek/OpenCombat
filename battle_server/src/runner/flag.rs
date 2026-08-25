@@ -11,7 +11,11 @@ use super::{message::RunnerMessage, Runner};
 impl Runner {
     pub fn tick_flags(&self) -> Vec<RunnerMessage> {
         puffin::profile_scope!("tick_flags");
-        if self.battle_state.frame_i() % self.config.flags_update_freq() == 0 {
+        if self
+            .battle_state
+            .frame_i()
+            .is_multiple_of(self.config.flags_update_freq())
+        {
             let mut new_ownerships = vec![];
             for (flag_name, ownership) in self.battle_state.flags().ownerships() {
                 let flag = self.battle_state.map().flag(flag_name);

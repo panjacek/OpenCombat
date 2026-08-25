@@ -4,10 +4,7 @@ use battle_core::{
         Behavior,
     },
     entity::soldier::{Soldier, WeaponClass},
-    game::{
-        weapon::{Shot, Weapon},
-        Side,
-    },
+    game::{weapon::Weapon, Side},
     physics::{
         event::{bullet::BulletFire, cannon_blast::CannonBlast},
         utils::distance_between_points,

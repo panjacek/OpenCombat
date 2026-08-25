@@ -26,18 +26,12 @@ impl Phase {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Clone, Display)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone, Display, Default)]
 pub enum EndReason {
+    #[default]
     Flags,
     Morale,
     Aborted,
-}
-
-// To be compliant with Phase EnumIter
-impl Default for EndReason {
-    fn default() -> Self {
-        Self::Flags
-    }
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone)]

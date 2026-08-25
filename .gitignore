@@ -1,3 +1,17 @@
 /target
+/cache
 .idea
 *~
+
+# OpenCombat
+docs/plans/
+
+# local dev caches & artifacts
+/.cache/
+/htmlcov/
+/htmltest/
+/dump.rdb
+/.coverage
+/.pytest_cache/
+__pycache__/
+*.pyc

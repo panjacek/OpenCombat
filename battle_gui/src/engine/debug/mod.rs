@@ -196,7 +196,6 @@ impl Engine {
         Ok(())
     }
 
-    ///
     pub fn generate_visibilities_meshes(&mut self, mesh_builder: &mut MeshBuilder) -> GameResult {
         for squad_uuid in &self.gui_state.selected_squads().1 {
             let squad_composition = self.battle_state.squad(*squad_uuid);
@@ -401,15 +400,12 @@ impl Engine {
 
     pub fn inspect_for_bullet_fire_into_debug_points(&mut self, message: &BattleStateMessage) {
         let frame_i = self.gui_state.frame_i();
-        match message {
-            BattleStateMessage::PushBulletFire(bullet_fire) => {
-                self.gui_state.debug_points_mut().push(DebugPoint {
-                    frame_i: frame_i + 30,
-                    point: bullet_fire.point().clone(),
-                    color: RED.into(),
-                })
-            }
-            _ => {}
+        if let BattleStateMessage::PushBulletFire(bullet_fire) = message {
+            self.gui_state.debug_points_mut().push(DebugPoint {
+                frame_i: frame_i + 30,
+                point: *bullet_fire.point(),
+                color: RED.into(),
+            })
         }
     }
 }

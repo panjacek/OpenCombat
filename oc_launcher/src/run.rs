@@ -1,4 +1,8 @@
-use std::{env::current_exe, path::PathBuf, process::Command};
+use std::{
+    env::current_exe,
+    path::{Path, PathBuf},
+    process::Command,
+};
 
 use anyhow::{Context, Result};
 
@@ -14,8 +18,9 @@ pub struct BattleLauncher {
     side_b_controls: Vec<String>,
 }
 
+#[allow(dead_code)]
 impl BattleLauncher {
-    pub fn new(map_name: &str, deployment: &PathBuf, side: &str) -> Result<Self> {
+    pub fn new(map_name: &str, deployment: &Path, side: &str) -> Result<Self> {
         let executable_path = current_exe().context("Retrieve current executable path")?;
         let executable_path = executable_path
             .parent()
@@ -23,7 +28,7 @@ impl BattleLauncher {
         Ok(Self {
             executable_path: executable_path.to_path_buf(),
             map_name: map_name.to_string(),
-            deployment: deployment.clone(),
+            deployment: deployment.to_path_buf(),
             embedded_server: true,
             server_rep_address: "tcp://0.0.0.0:4255".to_string(),
             server_bind_address: "tcp://0.0.0.0:4256".to_string(),

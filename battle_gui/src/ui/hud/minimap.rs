@@ -32,6 +32,7 @@ pub struct Minimap {
 }
 
 impl Minimap {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         point: WindowPoint,
         map_width: f32,

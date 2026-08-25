@@ -61,6 +61,7 @@ pub struct BattleState {
 }
 
 impl BattleState {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         frame_i: u64,
         map: Map,
@@ -424,7 +425,7 @@ impl BattleState {
             .filter(|s| s.can_seek())
             .filter(|s| s.side() == side)
             .filter(|s| {
-                distance_between_points(&s.world_point(), &point).millimeters()
+                distance_between_points(&s.world_point(), point).millimeters()
                     <= distance.millimeters()
             })
             .collect()

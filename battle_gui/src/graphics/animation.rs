@@ -46,7 +46,7 @@ impl Graphics {
     pub fn update(&mut self, ctx: &Context) {
         let secs = ctx.time.delta().as_secs_f64();
 
-        for (_, animation) in self.soldier_animation_sequences.iter_mut() {
+        for animation in self.soldier_animation_sequences.values_mut() {
             animation.soldier_mut().advance_and_maybe_wrap(secs);
             if let Some(weapon_animation) = animation.weapon_mut() {
                 weapon_animation.advance_and_maybe_wrap(secs);

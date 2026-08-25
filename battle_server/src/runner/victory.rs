@@ -13,7 +13,11 @@ impl Runner {
     pub fn tick_victory(&self) -> Vec<RunnerMessage> {
         puffin::profile_scope!("tick_victory");
 
-        if self.battle_state.frame_i() % self.config.victory_update_freq() == 0 {
+        if self
+            .battle_state
+            .frame_i()
+            .is_multiple_of(self.config.victory_update_freq())
+        {
             // Victory by morale
             if self.battle_state.a_morale().0 <= END_MORALE {
                 return vec![RunnerMessage::BattleState(BattleStateMessage::SetPhase(

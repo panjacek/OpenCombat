@@ -7,7 +7,7 @@ use ggez::{
 };
 
 use battle_core::{
-    entity::soldier::{Soldier, WeaponClass},
+    entity::soldier::WeaponClass,
     game::squad::{squad_positions, Formation},
     order::{marker::OrderMarker, Order, PendingOrder},
     physics::{utils::DISTANCE_TO_METERS_COEFFICIENT, visibility::Visibility},
@@ -474,12 +474,10 @@ impl Engine {
                     .get_opponent_soldiers_at_point(cursor_point)
                     .iter()
                     .filter(|s| s.can_be_designed_as_target())
-                    .filter(|s| {
+                    .find(|s| {
                         self.battle_state
                             .soldier_is_visible_by_side(s, self.gui_state.side())
                     })
-                    .collect::<Vec<&&Soldier>>()
-                    .first()
                     .is_some()
                 {
                     OrderMarker::EngageSquad
