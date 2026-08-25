@@ -7,7 +7,11 @@ impl Runner {
     pub fn tick_morale(&self) -> Vec<RunnerMessage> {
         puffin::profile_scope!("tick_morale");
 
-        if self.battle_state.frame_i() % self.config.morale_update_freq() == 0 {
+        if self
+            .battle_state
+            .frame_i()
+            .is_multiple_of(self.config.morale_update_freq())
+        {
             let a_total = self
                 .battle_state
                 .soldiers()

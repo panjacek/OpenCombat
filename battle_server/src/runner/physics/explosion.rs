@@ -114,7 +114,8 @@ impl Runner {
         let mut messages = self.soldier_die(soldier.uuid());
 
         if soldier.can_produce_sound() {
-            let pick_from = [Sound::MaleScreaming1,
+            let pick_from = [
+                Sound::MaleScreaming1,
                 Sound::MaleScreaming2,
                 Sound::MaleScreaming3,
                 Sound::MaleScreaming4,
@@ -126,7 +127,8 @@ impl Runner {
                 Sound::MaleDie5,
                 Sound::MaleDie6,
                 Sound::MaleDie7,
-                Sound::MaleDie8];
+                Sound::MaleDie8,
+            ];
             messages.push(RunnerMessage::ClientsState(
                 ClientStateMessage::PlayBattleSound(
                     *pick_from

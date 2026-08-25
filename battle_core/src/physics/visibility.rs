@@ -248,6 +248,7 @@ impl Visibility {
     }
 
     // TODO : Optimize performances here
+    #[allow(clippy::type_complexity)]
     pub fn between_points_raw(
         config: &ServerConfig,
         from_point: &WorldPoint,

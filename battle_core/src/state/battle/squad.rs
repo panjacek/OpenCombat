@@ -21,7 +21,7 @@ impl BattleState {
             let type_ = self.squad_type(&squad_uuid);
             new_squads.insert(
                 squad_uuid,
-                SquadComposition::new(new_squad_leader, type_.clone(), squad_entities),
+                SquadComposition::new(new_squad_leader, *type_, squad_entities),
             );
         }
 
@@ -31,7 +31,7 @@ impl BattleState {
     pub fn squad_type(&self, squad_id: &SquadUuid) -> &SquadType {
         self.squad_types
             .get(squad_id)
-            .expect(&format!("Squad consistency required ({:?})", squad_id))
+            .unwrap_or_else(|| panic!("Squad consistency required ({:?})", squad_id))
     }
 
     fn unique_squad_ids(&self) -> Vec<SquadUuid> {

@@ -1,7 +1,5 @@
 use battle_core::physics::event::cannon_blast::CannonBlast;
 
-
-
 use crate::engine::message::EngineMessage;
 use crate::engine::Engine;
 use crate::graphics::message::GraphicsMessage;

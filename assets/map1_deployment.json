@@ -27,7 +27,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 1,
@@ -56,7 +57,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 2,
@@ -85,7 +87,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 3,
@@ -114,7 +117,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 4,
@@ -143,7 +147,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 5,
@@ -172,7 +177,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 6,
@@ -201,7 +207,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 7,
@@ -230,7 +237,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 8,
@@ -259,7 +267,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 9,
@@ -288,7 +297,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         }
     ],
     "vehicles": [],

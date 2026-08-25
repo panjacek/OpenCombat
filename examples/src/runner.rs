@@ -45,8 +45,10 @@ impl Runner {
             target_fps: 60,
             interiors_update_freq: 60,
         };
-        let mut server_config = ServerConfig::default();
-        server_config.target_cycle_duration_us = self.target_cycle_duration;
+        let server_config = ServerConfig {
+            target_cycle_duration_us: self.target_cycle_duration,
+            ..Default::default()
+        };
         let (a_control, b_control) = (
             MapControl::new(vec![SpawnZoneName::All]),
             MapControl::new(vec![SpawnZoneName::All]),

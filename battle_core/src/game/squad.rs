@@ -47,7 +47,7 @@ pub fn squad_positions(
                     continue;
                 }
 
-                if counter % 2 == 0 {
+                if counter.is_multiple_of(2) {
                     x_offset += 10.0;
                     y_offset += 0.0;
                 }

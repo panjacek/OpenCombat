@@ -67,7 +67,7 @@ impl Deployment {
         let squad_types: SquadTypes = battle_state
             .squads()
             .iter()
-            .map(|s| (*s.0, s.1.type_().clone()))
+            .map(|s| (*s.0, *s.1.type_()))
             .collect();
 
         Self {
@@ -151,6 +151,7 @@ pub struct SoldierDeployment {
 }
 
 impl SoldierDeployment {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         uuid: SoldierIndex,
         type_: SoldierType,

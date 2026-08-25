@@ -42,7 +42,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 1,
@@ -89,7 +90,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 2,
@@ -136,7 +138,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 3,
@@ -183,7 +186,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 4,
@@ -230,7 +234,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 5,
@@ -277,7 +282,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 6,
@@ -324,7 +330,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 7,
@@ -371,7 +378,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 8,
@@ -418,7 +426,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 9,
@@ -465,7 +474,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 10,
@@ -512,7 +522,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 11,
@@ -559,7 +570,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 12,
@@ -606,7 +618,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 13,
@@ -653,7 +666,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 14,
@@ -700,7 +714,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 15,
@@ -747,7 +762,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 16,
@@ -794,7 +810,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 17,
@@ -841,7 +858,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 18,
@@ -888,7 +906,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 19,
@@ -935,7 +954,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 20,
@@ -982,7 +1002,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 21,
@@ -1029,7 +1050,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 22,
@@ -1076,7 +1098,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 23,
@@ -1123,7 +1146,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 24,
@@ -1170,7 +1194,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 25,
@@ -1217,7 +1242,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 26,
@@ -1264,7 +1290,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 27,
@@ -1311,7 +1338,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 28,
@@ -1358,7 +1386,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 29,
@@ -1405,7 +1434,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 30,
@@ -1452,7 +1482,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 31,
@@ -1499,7 +1530,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 32,
@@ -1546,7 +1578,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 33,
@@ -1593,7 +1626,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 34,
@@ -1640,7 +1674,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 35,
@@ -1687,7 +1722,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 36,
@@ -1734,7 +1770,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 37,
@@ -1781,7 +1818,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 38,
@@ -1828,7 +1866,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 39,
@@ -1875,7 +1914,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 40,
@@ -1922,7 +1962,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 41,
@@ -1969,7 +2010,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 42,
@@ -2016,7 +2058,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 43,
@@ -2063,7 +2106,8 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         },
         {
             "uuid": 44,
@@ -2110,9 +2154,21 @@
             "order": "Idle",
             "behavior": {
                 "Idle": "StandUp"
-            }
+            },
+            "type_": "Type1"
         }
     ],
     "vehicles": [],
-    "boards": {}
+    "boards": {},
+    "squad_types": {
+        "0": "Type1",
+        "1": "Type1",
+        "2": "Type1",
+        "3": "Type1",
+        "4": "Type1",
+        "5": "Type1",
+        "6": "Type1",
+        "7": "Type1",
+        "8": "Type1"
+    }
 }

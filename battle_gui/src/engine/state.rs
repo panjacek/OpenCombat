@@ -74,7 +74,6 @@ pub struct GuiState {
     /// Contains current control mode
     control: Control,
     cursor_in_hud: bool,
-    ///
     begin_click_on_soldier: Option<SoldierIndex>,
     dragged_squad: Option<SquadUuid>,
     //

@@ -77,6 +77,7 @@ fn main() -> Result<(), Error> {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum Error {
     MapReaderError(MapReaderError),
     LoadBattle(BattleStateBuilderError),

@@ -2,23 +2,21 @@ use glam::Vec2;
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "hd")]
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
 pub enum Zoom {
     In,
+    #[default]
     Standard,
 }
 
 #[cfg(not(feature = "hd"))]
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
 pub enum Zoom {
+    #[default]
     Standard,
 }
 
 impl Zoom {
-    pub fn default() -> Self {
-        Self::Standard
-    }
-
     pub fn hd() -> Self {
         #[cfg(feature = "hd")]
         {

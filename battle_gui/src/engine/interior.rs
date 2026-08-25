@@ -9,7 +9,10 @@ impl Engine {
     pub fn tick_interiors(&mut self) -> Vec<EngineMessage> {
         puffin::profile_scope!("tick_interiors");
         let messages = vec![];
-        let tick_update = self.gui_state.frame_i() % self.config.interiors_update_freq == 0;
+        let tick_update = self
+            .gui_state
+            .frame_i()
+            .is_multiple_of(self.config.interiors_update_freq);
 
         if tick_update {
             self.update_interior_sprites();

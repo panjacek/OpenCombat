@@ -129,8 +129,8 @@ impl<'a> HudBuilder<'a> {
         let blue_positions = self
             .battle_state
             .squads()
-            .iter()
-            .map(|(s, _)| self.battle_state.squad(*s))
+            .keys()
+            .map(|s| self.battle_state.squad(*s))
             .map(|s| self.battle_state.soldier(s.leader()))
             .filter(|s| s.side() == self.gui_state.side())
             .map(|s| s.world_point())
@@ -138,8 +138,8 @@ impl<'a> HudBuilder<'a> {
         let red_positions = self
             .battle_state
             .squads()
-            .iter()
-            .map(|(s, _)| self.battle_state.squad(*s))
+            .keys()
+            .map(|s| self.battle_state.squad(*s))
             .map(|s| self.battle_state.soldier(s.leader()))
             .filter(|s| s.side() != self.gui_state.side())
             .filter(|s| {

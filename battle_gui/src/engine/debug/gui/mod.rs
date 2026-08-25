@@ -18,8 +18,9 @@ pub mod state;
 pub mod terrain;
 pub mod textures;
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Default)]
 pub enum Panel {
+    #[default]
     Terrain,
     Soldiers,
     BattleState,
@@ -31,12 +32,6 @@ pub enum Panel {
     Textures,
     Explosives,
     Saves,
-}
-
-impl Default for Panel {
-    fn default() -> Self {
-        Self::Terrain
-    }
 }
 
 impl Engine {

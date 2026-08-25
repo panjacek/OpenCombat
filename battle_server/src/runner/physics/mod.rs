@@ -8,7 +8,11 @@ impl Runner {
         puffin::profile_scope!("tick_physics");
         let mut messages = vec![];
 
-        if self.battle_state.frame_i() % self.config.physics_update_freq() == 0 {
+        if self
+            .battle_state
+            .frame_i()
+            .is_multiple_of(self.config.physics_update_freq())
+        {
             messages.extend(self.tick_bullet_fires());
             messages.extend(self.tick_explosions());
         }

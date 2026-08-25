@@ -65,7 +65,6 @@ pub struct Engine {
     // Debug gui
     debug_gui: DebugGuiState,
     egui_backend: Gui,
-    ///
     hud: Hud,
     a_control: MapControl,
     b_control: MapControl,

@@ -15,7 +15,7 @@ impl Engine {
 
         ui.horizontal(|ui| {
             ComboBox::from_label("Select explosive to configure")
-                .selected_text(format!("{:?}", &mut self.debug_gui.explosive))
+                .selected_text(format!("{:?}", self.debug_gui.explosive))
                 .show_ui(ui, |ui| {
                     ui.style_mut().wrap = Some(false);
                     ui.set_min_width(60.0);

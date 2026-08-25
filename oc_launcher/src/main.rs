@@ -128,7 +128,7 @@ impl Launcher {
         side_a_controls: Vec<&str>,
         side_b_controls: Vec<&str>,
     ) -> Result<()> {
-        BattleLauncher::new(map_name, &Path::new(deployment).to_path_buf(), "a")?
+        BattleLauncher::new(map_name, Path::new(deployment), "a")?
             .side_a_controls(side_a_controls.into_iter().map(String::from).collect())
             .side_b_controls(side_b_controls.into_iter().map(String::from).collect())
             .launch()?;

@@ -4,10 +4,7 @@ use battle_core::{
     audio::Sound,
     types::{Offset, WindowPoint},
 };
-use ggez::{
-    event::MouseButton, input::keyboard::KeyInput,
-    winit::event::VirtualKeyCode, Context,
-};
+use ggez::{event::MouseButton, input::keyboard::KeyInput, winit::event::VirtualKeyCode, Context};
 
 use crate::{
     debug::DebugPhysics,
@@ -182,15 +179,12 @@ impl Engine {
             Some(VirtualKeyCode::LControl) | Some(VirtualKeyCode::RControl) => messages.push(
                 EngineMessage::GuiState(GuiStateMessage::SetControl(self.determine_controlling())),
             ),
-            Some(VirtualKeyCode::Escape) => {
-                if !self.gui_state.pending_order().is_empty() {
-                    messages.extend([
-                        EngineMessage::GuiState(GuiStateMessage::SetPendingOrders(vec![])),
-                        EngineMessage::GuiState(GuiStateMessage::SetDisplayPaths(vec![])),
-                        EngineMessage::PlaySound(Sound::Bip1),
-                    ])
-                }
-            }
+            Some(VirtualKeyCode::Escape) if !self.gui_state.pending_order().is_empty() => messages
+                .extend([
+                    EngineMessage::GuiState(GuiStateMessage::SetPendingOrders(vec![])),
+                    EngineMessage::GuiState(GuiStateMessage::SetDisplayPaths(vec![])),
+                    EngineMessage::PlaySound(Sound::Bip1),
+                ]),
             _ => {}
         };
 

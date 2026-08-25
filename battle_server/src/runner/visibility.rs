@@ -46,12 +46,16 @@ impl Runner {
     }
 
     fn is_tick_update_orders(&self) -> bool {
-        self.battle_state.frame_i() % self.config.visibility_update_freq() == 0
+        self.battle_state
+            .frame_i()
+            .is_multiple_of(self.config.visibility_update_freq())
             && self.battle_state.phase().is_battle()
     }
 
     fn is_tick_update_soldier_freq(&self) -> bool {
-        self.battle_state.frame_i() % self.update_soldier_freq() == 0
+        self.battle_state
+            .frame_i()
+            .is_multiple_of(self.update_soldier_freq())
             && self.battle_state.phase().is_battle()
     }
 
@@ -134,8 +138,7 @@ impl Runner {
                             .members()
                             .iter()
                             .map(|i| self.battle_state.soldier(*i))
-                            .map(|s| self.battle_state.soldier_is_visible_by_side(s, &side))
-                            .any(|v| v)
+                            .any(|s| self.battle_state.soldier_is_visible_by_side(s, &side))
                         {
                             messages.extend(vec![
                                 RunnerMessage::BattleState(BattleStateMessage::Soldier(
