@@ -1,9 +1,7 @@
 use crossbeam_channel::{unbounded, Receiver, Sender};
 
-use crate::{
-    message::{InputMessage, OutputMessage},
-    network::error::NetworkError,
-};
+use crate::message::{InputMessage, OutputMessage};
+use crate::network::error::NetworkError;
 
 #[derive(Clone)]
 pub struct Channel {

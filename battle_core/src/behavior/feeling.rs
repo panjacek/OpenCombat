@@ -156,12 +156,12 @@ mod tests {
 
     #[test]
     fn severity_thresholds_are_staircased() {
-        let mut warning = Feeling::UnderFire(UNDER_FIRE_WARNING);
+        let warning = Feeling::UnderFire(UNDER_FIRE_WARNING);
         assert!(warning.is_warning());
         assert!(!warning.is_danger());
         assert!(!warning.is_max());
 
-        let mut danger = Feeling::UnderFire(UNDER_FIRE_DANGER);
+        let danger = Feeling::UnderFire(UNDER_FIRE_DANGER);
         assert!(!danger.is_warning());
         assert!(danger.is_danger());
         assert!(!danger.is_max());
@@ -171,7 +171,7 @@ mod tests {
         assert!(maxed.is_max());
         assert!(!maxed.is_danger());
 
-        let mut calm = Feeling::UnderFire(UNDER_FIRE_WARNING - 1);
+        let calm = Feeling::UnderFire(UNDER_FIRE_WARNING - 1);
         assert!(!calm.is_warning());
     }
 }
