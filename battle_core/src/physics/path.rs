@@ -36,7 +36,9 @@ pub enum Direction {
 
 impl Direction {
     pub fn from_angle(angle: &Angle) -> Self {
-        let degrees = angle.0.to_degrees();
+        // normalize into [0, 360) first: angleg() can return negative degrees
+        // (atan2 range shifted by FRAC_PI_2), and e.g. -45deg is NorthWest
+        let degrees = angle.0.to_degrees().rem_euclid(360.0);
         if degrees >= 337.5 || degrees <= 22.5 {
             Self::North
         } else if degrees > 22.5 && degrees <= 67.5 {
@@ -192,5 +194,111 @@ pub fn find_path(
                 Some(path.0.iter().map(|x| x.0).collect())
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use strum::IntoEnumIterator;
+
+    fn degrees(value: f32) -> Angle {
+        Angle(value.to_radians())
+    }
+
+    #[test]
+    fn from_angle_maps_the_eight_compass_sectors() {
+        let cases = [
+            (0.0, Direction::North),
+            (30.0, Direction::NorthEst),
+            (90.0, Direction::Est),
+            (135.0, Direction::SouthEst),
+            (180.0, Direction::South),
+            (225.0, Direction::SouthWest),
+            (270.0, Direction::West),
+            (315.0, Direction::NorthWest),
+            // sector boundaries resolve to the counterclockwise neighbor
+            // (e.g. exactly 22.5 degrees counts as North, not NorthEst)
+            (22.5, Direction::North),
+            (22.6, Direction::NorthEst),
+            // negative angles normalize: regression for the NW-sector bug
+            (-30.0, Direction::NorthWest),
+            (-45.0, Direction::NorthWest),
+            (-90.0, Direction::West),
+            (350.0, Direction::North),
+        ];
+        for (angle, expected) in cases {
+            assert_eq!(
+                Direction::from_angle(&degrees(angle)),
+                expected,
+                "{angle} degrees"
+            );
+        }
+    }
+
+    #[test]
+    fn modifiers_point_to_adjacent_grid_tiles() {
+        let cases = [
+            (Direction::North, (0, -1)),
+            (Direction::NorthEst, (1, -1)),
+            (Direction::Est, (1, 0)),
+            (Direction::SouthEst, (1, 1)),
+            (Direction::South, (0, 1)),
+            (Direction::SouthWest, (-1, 1)),
+            (Direction::West, (-1, 0)),
+            (Direction::NorthWest, (-1, -1)),
+        ];
+        for (direction, modifier) in cases {
+            assert_eq!(direction.modifier(), modifier);
+        }
+    }
+
+    #[test]
+    fn angle_cost_is_symmetric_across_all_direction_pairs() {
+        for facing in Direction::iter() {
+            for step in Direction::iter() {
+                assert_eq!(
+                    facing.angle_cost(&step),
+                    step.angle_cost(&facing),
+                    "cost({facing:?}, {step:?}) must equal cost({step:?}, {facing:?})"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn angle_cost_ladder_matches_constants() {
+        // semantic ladder spot-checks on one facing
+        assert_eq!(
+            Direction::North.angle_cost(&Direction::NorthEst),
+            COST_DIAGONAL
+        );
+        assert_eq!(Direction::North.angle_cost(&Direction::Est), COST_CORNER);
+        assert_eq!(
+            Direction::North.angle_cost(&Direction::SouthEst),
+            COST_BACK_CORNER
+        );
+        assert_eq!(Direction::North.angle_cost(&Direction::South), COST_BACK);
+        // and the same ladder holds rotated, via the symmetry property
+        for facing in Direction::iter() {
+            let clockwise_next = match facing {
+                Direction::North => Direction::NorthEst,
+                Direction::NorthEst => Direction::Est,
+                Direction::Est => Direction::SouthEst,
+                Direction::SouthEst => Direction::South,
+                Direction::South => Direction::SouthWest,
+                Direction::SouthWest => Direction::West,
+                Direction::West => Direction::NorthWest,
+                Direction::NorthWest => Direction::North,
+            };
+            assert_eq!(facing.angle_cost(&clockwise_next), COST_DIAGONAL);
+            assert_eq!(facing.angle_cost(&facing), COST_AHEAD);
+        }
+    }
+
+    #[test]
+    fn path_mode_vehicle_inclusion() {
+        assert!(!PathMode::Walk.include_vehicles());
+        assert!(PathMode::Drive(VehicleSize(2)).include_vehicles());
     }
 }

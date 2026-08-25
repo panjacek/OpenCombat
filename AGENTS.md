@@ -25,6 +25,11 @@ Makefile auto-detects environment:
 - ALWAYS run `make fmt` before handing off any Rust change — CI gates on rustfmt
   and hand-edited files will fail the fmt job.
 
+- Commits follow Conventional Commits: `<type>(<scope>): <imperative summary>`.
+  Types: `feat`, `fix`, `test`, `ci`, `docs`, `refactor`, `chore`. Scope optional
+  (e.g. crate or area name). Keep behavior fixes separate from test/doc commits
+  so bisect stays meaningful. Never mix unrelated changes into one commit.
+
 - Logs: `make check-log` / `lint-log` write `.cache/*.log` so agents can read results.
 - Clippy gate is `-D warnings`; use `--keep-going` to see all crates' errors at once.
 - Plans live in `docs/plans/<date>_plan_<subject>.md` (gitignored).
