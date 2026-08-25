@@ -88,3 +88,90 @@ impl Feeling {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn blast_increase_value_has_three_distance_tiers() {
+        assert_eq!(Feeling::blast_increase_value(Distance::from_meters(0)), 150);
+        assert_eq!(
+            Feeling::blast_increase_value(Distance::from_millimeters(4999)),
+            150
+        );
+        assert_eq!(Feeling::blast_increase_value(Distance::from_meters(5)), 100);
+        assert_eq!(
+            Feeling::blast_increase_value(Distance::from_millimeters(9999)),
+            100
+        );
+        assert_eq!(Feeling::blast_increase_value(Distance::from_meters(10)), 50);
+        assert_eq!(
+            Feeling::blast_increase_value(Distance::from_meters(500)),
+            50
+        );
+    }
+
+    #[test]
+    fn proximity_bullet_increase_value_has_three_distance_tiers() {
+        assert_eq!(
+            Feeling::proximity_bullet_increase_value(Distance::from_meters(0)),
+            100
+        );
+        assert_eq!(
+            Feeling::proximity_bullet_increase_value(Distance::from_millimeters(2999)),
+            100
+        );
+        assert_eq!(
+            Feeling::proximity_bullet_increase_value(Distance::from_meters(3)),
+            35
+        );
+        assert_eq!(
+            Feeling::proximity_bullet_increase_value(Distance::from_millimeters(9999)),
+            35
+        );
+        assert_eq!(
+            Feeling::proximity_bullet_increase_value(Distance::from_meters(10)),
+            1
+        );
+    }
+
+    #[test]
+    fn increase_caps_at_under_fire_max() {
+        let mut feeling = Feeling::UnderFire(UNDER_FIRE_MAX - 1);
+        feeling.increase(10);
+        assert_eq!(feeling.value(), &UNDER_FIRE_MAX);
+    }
+
+    #[test]
+    fn decrease_steps_down_by_tick_and_floors_at_zero() {
+        let mut feeling = Feeling::UnderFire(25);
+        feeling.decrease();
+        assert_eq!(feeling.value(), &(25 - UNDER_FIRE_TICK));
+
+        let mut small = Feeling::UnderFire(UNDER_FIRE_TICK - 1);
+        small.decrease();
+        assert_eq!(small.value(), &0, "must floor at zero, not underflow");
+    }
+
+    #[test]
+    fn severity_thresholds_are_staircased() {
+        let mut warning = Feeling::UnderFire(UNDER_FIRE_WARNING);
+        assert!(warning.is_warning());
+        assert!(!warning.is_danger());
+        assert!(!warning.is_max());
+
+        let mut danger = Feeling::UnderFire(UNDER_FIRE_DANGER);
+        assert!(!danger.is_warning());
+        assert!(danger.is_danger());
+        assert!(!danger.is_max());
+
+        let mut maxed = Feeling::UnderFire(UNDER_FIRE_MAX);
+        maxed.increase(1000);
+        assert!(maxed.is_max());
+        assert!(!maxed.is_danger());
+
+        let mut calm = Feeling::UnderFire(UNDER_FIRE_WARNING - 1);
+        assert!(!calm.is_warning());
+    }
+}

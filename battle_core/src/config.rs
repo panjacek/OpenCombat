@@ -467,3 +467,62 @@ pub enum ChangeConfigMessage {
     ExplosiveRegressiveDeathRayon(ExplosiveType, Distance),
     ExplosiveRegressiveInjuredRayon(ExplosiveType, Distance),
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_server_config_has_positive_update_freqs() {
+        let config = ServerConfig::default();
+        assert_eq!(
+            config.target_cycle_duration_us, TARGET_CYCLE_DURATION_US,
+            "cycle duration must match the published constant"
+        );
+        let freqs = [
+            config.flags_update_freq,
+            config.soldier_update_freq,
+            config.soldier_animate_freq,
+            config.squad_leaders_update_freq,
+            config.interiors_update_freq,
+            config.visibility_update_freq,
+            config.morale_update_freq,
+            config.victory_update_freq,
+            config.physics_update_freq,
+            config.feeling_decreasing_freq,
+        ];
+        for freq in freqs {
+            assert!(
+                freq > 0,
+                "update freqs must be non-zero to avoid modulo-by-zero"
+            );
+        }
+        assert!(
+            config.visibility_firsts >= 1,
+            "first visibility ticks must exist"
+        );
+    }
+
+    #[test]
+    fn visibility_modifiers_encode_tactical_sanity() {
+        let config = ServerConfig::default();
+        // prone and hiding reduce visibility versus standing
+        assert!(
+            config.visibility_idle_lying_modifier < config.visibility_idle_standup_modifier,
+            "lying must be less visible than standing"
+        );
+        assert!(
+            config.visibility_hide_modifier < config.visibility_idle_standup_modifier,
+            "hiding must be less visible than standing"
+        );
+        // moving fast exposes more than normal movement; sneaking hides better
+        assert!(config.visibility_move_fast_to_modifier > config.visibility_move_to_modifier);
+        assert!(config.visibility_sneak_to_modifier < config.visibility_move_to_modifier);
+        // incapacitated soldiers are invisible
+        assert_eq!(config.visibility_dead_modifier, 0.0);
+        assert_eq!(config.visibility_unconscious_modifier, 0.0);
+        assert!(config.visible_starts_at > 0.0);
+        assert!(config.target_alteration_by_opacity_factor > 0.0);
+        assert!(config.inaccurate_fire_factor_by_meter > 0.0);
+    }
+}

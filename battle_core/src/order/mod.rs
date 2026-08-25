@@ -171,3 +171,88 @@ impl Display for Order {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::types::{WorldPath, WorldPaths};
+
+    fn move_order(points: Vec<WorldPoint>) -> Order {
+        Order::MoveTo(WorldPaths::new(vec![WorldPath::new(points)]), None)
+    }
+
+    #[test]
+    fn marker_maps_every_order_variant() {
+        let paths = WorldPaths::new(vec![WorldPath::new(vec![])]);
+
+        assert_eq!(Order::Idle.marker(), None);
+        assert_eq!(move_order(vec![]).marker(), Some(OrderMarker::MoveTo));
+        assert_eq!(
+            Order::MoveFastTo(paths.clone(), None).marker(),
+            Some(OrderMarker::MoveFastTo)
+        );
+        assert_eq!(
+            Order::SneakTo(paths, None).marker(),
+            Some(OrderMarker::SneakTo)
+        );
+        assert_eq!(
+            Order::Defend(Angle::zero()).marker(),
+            Some(OrderMarker::Defend)
+        );
+        assert_eq!(Order::Hide(Angle::zero()).marker(), Some(OrderMarker::Hide));
+        assert_eq!(
+            Order::EngageSquad(SquadUuid(0)).marker(),
+            Some(OrderMarker::EngageSquad)
+        );
+        assert_eq!(
+            Order::SuppressFire(WorldPoint::new(0.0, 0.0)).marker(),
+            Some(OrderMarker::SuppressFire)
+        );
+    }
+
+    #[test]
+    fn angle_is_only_defined_for_directional_holds() {
+        assert_eq!(Order::Defend(Angle(1.5)).angle(), Some(Angle(1.5)));
+        assert_eq!(Order::Hide(Angle(-0.5)).angle(), Some(Angle(-0.5)));
+        assert_eq!(Order::Idle.angle(), None);
+        assert_eq!(move_order(vec![]).angle(), None);
+        assert_eq!(Order::SuppressFire(WorldPoint::new(0.0, 0.0)).angle(), None);
+    }
+
+    #[test]
+    fn reach_step_consumes_path_and_reports_completion() {
+        let mut order = move_order(vec![
+            WorldPoint::new(0.0, 0.0),
+            WorldPoint::new(10.0, 0.0),
+            WorldPoint::new(20.0, 0.0),
+        ]);
+
+        assert!(!order.reach_step());
+        assert!(!order.reach_step());
+        assert!(
+            order.reach_step(),
+            "last consumed point completes the order"
+        );
+    }
+
+    #[test]
+    fn non_move_orders_never_reach() {
+        assert!(!Order::Idle.reach_step());
+        assert!(!Order::Defend(Angle::zero()).reach_step());
+        assert!(!Order::Hide(Angle::zero()).reach_step());
+        assert!(!Order::EngageSquad(SquadUuid(3)).reach_step());
+    }
+
+    #[test]
+    fn then_returns_chained_followup_order() {
+        let followup = Box::new(Order::Idle);
+        let chained = Order::MoveTo(
+            WorldPaths::new(vec![WorldPath::new(vec![])]),
+            Some(followup),
+        );
+        assert!(matches!(chained.then(), Some(Order::Idle)));
+
+        assert_eq!(Order::Idle.then(), None);
+        assert_eq!(Order::Defend(Angle::zero()).then(), None);
+    }
+}

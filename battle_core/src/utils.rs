@@ -334,3 +334,71 @@ pub fn start_puffin_server(address: String) {
         }
     };
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::physics::path::Direction;
+
+    #[test]
+    fn angleg_is_north_oriented() {
+        // sprites face north: a target straight above yields zero angle -> North
+        let from = GridPoint::new(0, 0);
+        assert_eq!(
+            Direction::from_angle(&angleg(&GridPoint::new(0, -10), &from)),
+            Direction::North
+        );
+        assert_eq!(
+            Direction::from_angle(&angleg(&GridPoint::new(10, 0), &from)),
+            Direction::Est
+        );
+        assert_eq!(
+            Direction::from_angle(&angleg(&GridPoint::new(0, 10), &from)),
+            Direction::South
+        );
+        assert_eq!(
+            Direction::from_angle(&angleg(&GridPoint::new(-10, 0), &from)),
+            Direction::West
+        );
+    }
+
+    #[test]
+    fn apply_angle_on_point_rotates_around_reference() {
+        let reference = WorldPoint::new(0.0, 0.0);
+        let point = WorldPoint::new(10.0, 0.0);
+
+        let quarter = apply_angle_on_point(&point, &reference, &Angle(std::f32::consts::FRAC_PI_2));
+        assert!((quarter.x() - 0.0).abs() < 1e-4);
+        assert!((quarter.y() - 10.0).abs() < 1e-4);
+
+        let back = apply_angle_on_point(&point, &reference, &Angle(std::f32::consts::PI));
+        assert!((back.x() - (-10.0)).abs() < 1e-4);
+        assert!(back.y().abs() < 1e-4);
+
+        // zero rotation is identity
+        let same = apply_angle_on_point(&point, &reference, &Angle(0.0));
+        assert_eq!((same.x(), same.y()), (10.0, 0.0));
+    }
+
+    #[test]
+    fn vehicle_board_groups_by_vehicle_preserving_places() {
+        use crate::entity::vehicle::OnBoardPlace;
+        use crate::types::{SoldierIndex, VehicleIndex};
+
+        let mut on_board = SoldiersOnBoard::new();
+        on_board.insert(SoldierIndex(0), (VehicleIndex(1), OnBoardPlace::Driver));
+        on_board.insert(
+            SoldierIndex(1),
+            (VehicleIndex(0), OnBoardPlace::MainTurretGunner),
+        );
+        on_board.insert(SoldierIndex(2), (VehicleIndex(1), OnBoardPlace::Passenger1));
+
+        let board = vehicle_board_from_soldiers_on_board(&on_board);
+        assert_eq!(board.len(), 2, "two distinct vehicles");
+        assert_eq!(
+            board.get(&VehicleIndex(1)).map(Vec::len),
+            Some(2),
+            "vehicle 1 carries two soldiers"
+        );
+    }
+}

@@ -580,3 +580,37 @@ pub type SoldiersOnBoard = HashMap<SoldierIndex, SoldierBoard>;
 pub type VehicleBoard = HashMap<VehicleIndex, Vec<(OnBoardPlace, SoldierIndex)>>;
 pub type BoardComposition = Vec<OnBoardPlace>;
 pub type VehicleGraphicPlaces = HashMap<OnBoardPlace, Offset>;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn distance_converts_between_meters_and_millimeters() {
+        assert_eq!(Distance::from_meters(3).millimeters(), 3000);
+        assert_eq!(Distance::from_millimeters(250).meters(), 0);
+        assert_eq!(Distance::from_millimeters(2500).meters(), 2);
+    }
+
+    #[test]
+    fn grid_point_display_renders_coordinates() {
+        assert_eq!(GridPoint::new(12, -7).to_string(), "12,-7");
+    }
+
+    #[test]
+    fn world_point_applies_offset_and_roundtrips_through_vec2() {
+        let point = WorldPoint::new(1.5, 2.5);
+        let moved = point.apply(Vec2::new(1.0, -1.0));
+        assert_eq!(moved, WorldPoint::new(2.5, 1.5));
+        assert_eq!(WorldPoint::from_vec2(point.to_vec2()), point);
+    }
+
+    #[test]
+    fn xy_apply_is_relative_for_point_types() {
+        let window = WindowPoint::from_xy(10.0, 20.0).apply(Vec2::new(-5.0, 5.0));
+        assert_eq!((window.x(), window.y()), (5.0, 25.0));
+
+        let scene = ScenePoint::new(0.0, 0.0)._apply(Vec2::new(3.0, 4.0));
+        assert_eq!((scene.x, scene.y), (3.0, 4.0));
+    }
+}
