@@ -17,50 +17,11 @@ Makefile auto-detects environment:
   then `source ~/.cargo/env`. Native dev packages are REQUIRED for any compilation
   (alsa, fontconfig, udev, libzmq + cmake) because `-sys` crate build scripts run even for
   check/clippy. Without them only `cargo fmt` / metadata-level work succeeds.
-
-### Sandbox bootstrap (no root, no apt — proven 2026-08-26)
-
-For locked-down environments without sudo/apt/docker. Installs everything into
-`~/.local` + `~/.cargo`. Verified: `cargo test -p battle_core` 48/48 green.
-
-```bash
-# 1. Rust toolchain (pinned by rust-toolchain.toml)
-curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.0
-
-# 2. cmake + ninja + meson via pip (user space)
-pip install cmake ninja meson
-
-# 3. pkgconf (pkg-config replacement; 2.3.0 is meson-only)
-curl -sSL -o ~/tmp/pkgconf.tar.xz https://distfiles.ariadne.space/pkgconf/pkgconf-2.3.0.tar.xz
-tar -xJf ~/tmp/pkgconf.tar.xz -C ~/tmp && mkdir -p ~/tmp/pkgconf-build
-~/.local/bin/meson setup ~/tmp/pkgconf-build ~/tmp/pkgconf-2.3.0 --prefix=$HOME/.local
-~/.local/bin/meson install -C ~/tmp/pkgconf-build
-ln -sf pkgconf ~/.local/bin/pkg-config
-
-# 4. libzmq shared (static fails at link: C++ symbols, no libstdc++ in cc link line;
-#    BUILD_STATIC also defaults ON — delete the .a after install so linker picks .so)
-curl -sSL -o ~/tmp/libzmq.tar.gz https://github.com/zeromq/libzmq/releases/download/v4.3.5/zeromq-4.3.5.tar.gz
-tar -xzf ~/tmp/libzmq.tar.gz -C ~/tmp
-~/.local/bin/cmake -S ~/tmp/zeromq-4.3.5 -B ~/tmp/libzmq-build \
-  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \   # cmake 4.x rejects old minimums otherwise
-  -DCMAKE_INSTALL_PREFIX=$HOME/.local -DWITH_LIBSODIUM=OFF \
-  -DBUILD_TESTS=OFF -DBUILD_SHARED=ON
-~/.local/bin/cmake --build ~/tmp/libzmq-build -j$(nproc)
-~/.local/bin/cmake --install ~/tmp/libzmq-build && rm -f ~/.local/lib/libzmq.a
-
-# 5. Env for every shell running cargo here (put in ~/.bashrc or export per command):
-export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
-export PKG_CONFIG_PATH="$HOME/.local/lib/pkgconfig"
-export LD_LIBRARY_PATH="$HOME/.local/lib"      # runtime lookup for libzmq.so.5
-export CARGO_TARGET_DIR="$HOME/.cache/oc-target"  # repo target/ may be root-owned
-```
-
-Gotchas hit on the way:
-- `/tmp/opencode` can be root-owned/unwritable → use `~/tmp`.
-- zmq-sys honors `LIBZMQ_NO_PKG_CONFIG=1` + `LIBZMQ_LIB_DIR` / `LIBZMQ_INCLUDE_DIR`
-  as a fallback if pkg-config itself is unavailable.
-- alsa/fontconfig/udev `-sys` crates are NOT needed for `battle_core` targets;
-  only `battle_gui` builds need them (docker covers those).
+- **locked-down sandbox (no root/apt/docker)** → user-space bootstrap procedure:
+  see `docs/sandbox_bootstrap.md` (rustup + pip cmake/meson + pkgconf + shared
+  libzmq; verified `cargo test -p battle_core` 48/48 green). Requires per-shell
+  env: `PATH` (+`~/.local/bin`), `PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig`,
+  `LD_LIBRARY_PATH=$HOME/.local/lib`, `CARGO_TARGET_DIR` off the repo.
 
 `run-gui` and `shell` are docker-only by nature.
 
