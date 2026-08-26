@@ -34,13 +34,16 @@ fn free_port() -> u16 {
     port
 }
 
-fn start_server_client() -> (
+/// (srv_out_tx, srv_in_rx, cli_in_tx, cli_out_rx, stop_required)
+type TestStack = (
     crossbeam_channel::Sender<Vec<OutputMessage>>,
     Receiver<Vec<InputMessage>>,
     crossbeam_channel::Sender<Vec<InputMessage>>,
     Receiver<Vec<OutputMessage>>,
     Arc<AtomicBool>,
-) {
+);
+
+fn start_server_client() -> TestStack {
     // Server-facing channels
     let (srv_out_tx, srv_out_rx) = unbounded::<Vec<OutputMessage>>();
     let (srv_in_tx, srv_in_rx) = unbounded::<Vec<InputMessage>>();
