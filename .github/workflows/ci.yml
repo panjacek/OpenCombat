@@ -18,47 +18,37 @@ jobs:
           components: rustfmt
       - run: cargo fmt --all -- --check
 
-  gate:
-    name: ${{ matrix.gate.name }}
+  checks:
+    name: ${{ matrix.task.name }}
     needs: fmt
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        gate:
+        task:
           - name: Clippy
             components: clippy
-            all-targets: true
+            cache-all-targets: true
             run: cargo clippy --workspace --all-targets --keep-going --locked -- -D warnings
-          - name: Test suite
+          - name: Test
             components: ""
-            all-targets: false
+            cache-all-targets: false
             run: cargo test --workspace --locked
+          - name: Coverage
+            components: llvm-tools-preview
+            cache-all-targets: true
+            run: cargo llvm-cov --workspace --locked --summary-only
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
       - uses: dtolnay/rust-toolchain@1.98.0
         with:
-          components: ${{ matrix.gate.components }}
-      - uses: Swatinem/rust-cache@v2
-        with:
-          cache-all-targets: ${{ matrix.gate.all-targets }}
-      - run: ${{ matrix.gate.run }}
-
-  coverage:
-    name: Coverage
-    needs: gate
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: ./.github/actions/setup
-      - uses: dtolnay/rust-toolchain@1.98.0
-        with:
-          components: llvm-tools-preview
-      - uses: taiki-e/install-action@v2
+          components: ${{ matrix.task.components }}
+      - if: matrix.task.name == 'Coverage'
+        uses: taiki-e/install-action@v2
         with:
           tool: cargo-llvm-cov
       - uses: Swatinem/rust-cache@v2
         with:
-          cache-all-targets: true
-      - run: cargo llvm-cov --workspace --locked --summary-only
+          cache-all-targets: ${{ matrix.task.cache-all-targets }}
+      - run: ${{ matrix.task.run }}
